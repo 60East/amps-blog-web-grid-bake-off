@@ -1,0 +1,34 @@
+{
+  "name": "amps-js-webix-demo",
+  "version": "1.0.0",
+  "description": "AMPS Webix DataTable demo",
+  "main": "app.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server",
+    "populate-sow": "node ./amps_instance/helper.js"
+  },
+  "keywords": [
+    "AMPS",
+    "JavaScript",
+    "Client"
+  ],
+  "author": "60 East Technologies Inc. <npmjs@crankuptheamps.com> (http://crankuptheamps.com)",
+  "license": "MIT",
+  "dependencies": {
+    "amps": "^5.2.2-3.682354.e5814ab",
+    "webix": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/webix": "^4.2.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "ts-loader": "^2.0.3",
+    "tslint": "^5.2.0",
+    "tslint-loader": "^3.5.3",
+    "typescript": "^2.3.2",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}

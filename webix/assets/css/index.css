@@ -1,0 +1,67 @@
+/* .component-header { */
+/*     text-align: center; */
+/*     font-weight: 900; */
+/*     font-size: 27px; */
+/* } */
+
+[view_id="sql_message_type"] .webix_input_icon {
+    border-radius: 0 !important;
+    margin-right: 0;
+    padding-right: 0;
+    border-left: 1px #fff solid;
+}
+
+[view_id="sql_topic"] input {
+    margin-left: -12px !important;
+    padding-left: 17px;
+}
+
+[view_id="sql_message_type"] .webix_inp_static {
+    background-color: #3498db;
+    color: whitesmoke;
+    border: #3498db 1px solid;
+}
+
+#header {
+    padding: 10px;
+    margin-top: 0;
+    color: white;
+    background-color: #1b629c;
+}
+
+.component-header {
+    background-color: #1b629c;
+    color: whitesmoke;
+    font-size: 27px;
+    font-weight: 900;
+    vertical-align: middle;
+}
+
+.header-right {
+    text-align: right;
+    vertical-align: middle;
+}
+
+.results-header {
+    background-color: #d2e3ef;
+    border-bottom: #b0cee3 2px solid !important;
+    color: #4a4a4a;
+    text-align: center;
+}
+
+/* .webix_input_icon.fa-angle-down { */
+/*     background-color: red !important; */
+/* } */
+
+/* SQL table styles */
+.new-sql-row {
+    background-color: #F3FFE7;
+}
+
+.removed-sql-row {
+    background-color: #ffcccc;
+}
+
+.updated-sql-row {
+    background-color: #fde5c3;
+}

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "lib": ["worker", "dom","es2015", "scripthost"]
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "node_modules/*"
+  ]
+}

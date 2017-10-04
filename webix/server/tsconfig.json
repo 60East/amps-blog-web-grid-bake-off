@@ -1,0 +1,10 @@
+{
+  "rootDir": "./",
+  "outFile": "helper.js",
+  "target": "ES5",
+  "compilerOptions": {
+    "lib": ["es5", "es2015.promise"]
+  },
+  "exclude": ["../node_modules"],
+  "files": ["helper.ts"]
+}
