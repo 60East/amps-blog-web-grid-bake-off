@@ -1,5 +1,6 @@
 # amps-blog-web-grid-bake-off
-A repository containing the artifacts for our Web Grid Component Bake-off.
+
+This is the repo with the artifacts for the original blog article [Grids Without Gridlock: Which is Fastest?](http://www.crankuptheamps.com//blog/posts/2017/10/05/grid-comparison/)
 
 
 # Overview
