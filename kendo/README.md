@@ -1,6 +1,6 @@
-## AMPS ag-Grid Demo
+## AMPS Kendo UI Grid Demo
 
-This demo is intended to demonstrate how AMPS can be used as a data source for ag-Grid-based tables and 
+This demo is intended to demonstrate how AMPS can be used as a data source for Kendo UI Grid-based tables and 
 information panels.
 
 
@@ -12,8 +12,10 @@ information panels.
 
 
 #### Dependencies
-- ag-Grid 22.1.1
+- Kendo UI 2019.3.1023
 - AMPS JavaScript Client 5.3.0.1
+
+Kendo dependencies are NOT included in here as the product has a restrictive proprietary license.
 
 
 #### Quick Start

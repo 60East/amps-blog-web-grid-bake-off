@@ -21,7 +21,6 @@ self.addEventListener('message', function(event) {
             var rowId;
 
             // query data now
-            // return client.subscribe(function(message) {
             return client.sowAndSubscribe(function(message) {
                 header = message.header.command();
                 // new query
@@ -69,7 +68,7 @@ self.addEventListener('message', function(event) {
                         self.postMessage({oof: message.data, rowIndex: index});
                     }
                 }
-            }, params.topic, params.filter || null, {
+            }, params.topic, params.filter ? params.filter : null, {
                 options: 'oof',
                 topN: params.topN || '',
                 orderBy: params.orderBy || ''

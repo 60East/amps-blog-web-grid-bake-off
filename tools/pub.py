@@ -13,7 +13,7 @@ def get_valid_input():
             result = int(raw_input('How many messages to publish (0 to stop, -1 to sow_delete): '))
             if result >= 0:
                 return result
-        except:
+        except Exception:
             result = None
 
 
@@ -23,10 +23,10 @@ def main(*args):
     try:
         current_id = int(args[0])
         publish_rate = int(args[1])
-    except:
+    except Exception:
         pass
 
-    teslas = ['S', '3', 'X', 'Roadster']
+    teslas = ['S', '3', 'X', 'Y', 'CyberTruck', 'Roadster']
 
     # set up the client
     client = Client('the-publisher')
@@ -58,7 +58,7 @@ def main(*args):
                 'orders',
                 json.dumps({
                     'order_id': current_id,
-                    'name': 'Tesla Model ' + teslas[random.randint(0, len(teslas) - 1)],
+                    'name': 'Tesla ' + teslas[random.randint(0, len(teslas) - 1)],
                     'price_usd': price_usd,
                     'quantity': quantity,
                     'total': total

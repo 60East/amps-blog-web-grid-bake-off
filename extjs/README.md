@@ -1,6 +1,6 @@
-## AMPS ag-Grid Demo
+## AMPS Sencha Ext JS Demo
 
-This demo is intended to demonstrate how AMPS can be used as a data source for ag-Grid-based tables and 
+This demo is intended to demonstrate how AMPS can be used as a data source for Sencha Ext JS-based tables and 
 information panels.
 
 
@@ -12,8 +12,10 @@ information panels.
 
 
 #### Dependencies
-- ag-Grid 22.1.1
+- Sencha Ext JS 7.0.0
 - AMPS JavaScript Client 5.3.0.1
+
+Sencha dependencies are NOT included in here as the product has a restrictive proprietary license.
 
 
 #### Quick Start

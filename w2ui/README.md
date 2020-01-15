@@ -1,6 +1,6 @@
-## AMPS ag-Grid Demo
+## AMPS w2ui Grid Demo
 
-This demo is intended to demonstrate how AMPS can be used as a data source for ag-Grid-based tables and 
+This demo is intended to demonstrate how AMPS can be used as a data source for w2ui Grid-based tables and 
 information panels.
 
 
@@ -12,7 +12,7 @@ information panels.
 
 
 #### Dependencies
-- ag-Grid 22.1.1
+- w2ui 1.5
 - AMPS JavaScript Client 5.3.0.1
 
 

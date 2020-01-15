@@ -1,21 +1,22 @@
 <!doctype html>
 <html>
     <head>
-        <title>ag-Grid AMPS Demo</title>
+        <title>FancyGrid AMPS Demo</title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 
         <!-- Dependencies -->
-        <script src="assets/ag-grid-enterprise.min.js"></script>
+        <script src="assets/fancygrid/fancy.full.min.js"></script>
         <script src="src/amps.min.js"></script>
 
         <!-- Styles -->
+        <link rel="stylesheet" href="assets/fancygrid/fancy.min.css" type="text/css" media="all" />
         <link rel="stylesheet" href="src/css/index.css" type="text/css" media="all" />
 
         <!-- Starting point -->
         <script src="src/index.js" charset="utf-8"></script>
     </head>
     <body>
-        <h1 id="header"> <img src="src/img/logo.png" id="logo" /> AMPS ag-Grid Demo</h1>
+        <h1 id="header"> <img src="src/img/logo.png" id="logo" /> AMPS FancyGrid Demo</h1>
 
         <!-- Query Controls -->
         <div class="frame">
@@ -27,7 +28,7 @@
                             <option value="json">JSON</option>
                             <option value="nvfix">NVFIX</option>
                         </select>
-                        <input type="text" name="topic" id="topic" value="orders" />
+                        <input type="text" name="topic" id="topic" value="" />
                     </td>
                     <td class="right"><label>Filter: </label></td>
                     <td><input type="text" name="filter" id="filter" value="" /></td>
@@ -36,7 +37,7 @@
                     <td class="right"><label>TopN: </label></td>
                     <td><input type="text" name="top_n" id="top_n" value="" /></td>
                     <td class="right"><label>Order By: </label></td>
-                    <td><input type="text" name="order_by" id="order_by" value="/order_id ASC" /></td>
+                    <td><input type="text" name="order_by" id="order_by" value="" /></td>
                 </tr>
             </table>
 
@@ -51,6 +52,6 @@
         <div id="error-label"></div>
 
         <!-- Grid content goes here -->
-        <div id="container" class="ag-theme-material"></div>
+        <div id="container" class="ag-fresh"></div>
     </body>
 </html>

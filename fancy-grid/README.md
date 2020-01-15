@@ -1,6 +1,6 @@
-## AMPS ag-Grid Demo
+## AMPS FancyGrid Demo
 
-This demo is intended to demonstrate how AMPS can be used as a data source for ag-Grid-based tables and 
+This demo is intended to demonstrate how AMPS can be used as a data source for FancyGrid-based tables and 
 information panels.
 
 
@@ -8,11 +8,10 @@ information panels.
 - No installation required
 - No building required
 - large SOW queries performed in a WebWorker process so that the UI is not frozen.
-- The datatable is VERY snappy and responsive.
 
 
 #### Dependencies
-- ag-Grid 22.1.1
+- FancyGrid 1.7.87
 - AMPS JavaScript Client 5.3.0.1
 
 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AMPSConfig>
+    <Name>Web Grid Testing</Name>
+
+    <Admin>
+        <FileName>stats.db</FileName>
+        <InetAddr>8085</InetAddr>
+        <SQLTransport>websocket-any</SQLTransport>
+    </Admin>
+
+    <Transports>
+        <Transport>
+            <Name>websocket-any</Name>
+            <Type>tcp</Type>
+            <Protocol>websocket</Protocol>
+            <InetAddr>9000</InetAddr>
+        </Transport>
+        <Transport>
+            <Name>tcp-any</Name>
+            <Type>tcp</Type>
+            <Protocol>amps</Protocol>
+            <InetAddr>9007</InetAddr>
+        </Transport>
+    </Transports>
+
+    <Logging>
+        <Target>
+            <Protocol>stdout</Protocol>
+            <Level>debug</Level>
+            <IncludeErrors>00-0015</IncludeErrors>
+        </Target>
+    </Logging>
+
+    <SOW>
+        <Topic>
+            <Name>orders</Name>
+            <MessageType>json</MessageType>
+            <FileName>./sow/%n.sow</FileName>
+            <Key>/order_id</Key>
+        </Topic>
+    </SOW>
+
+    <Actions>
+        <Action>
+            <On>
+                <Module>amps-action-on-shutdown</Module>
+            </On>
+            <Do>
+                <Module>amps-action-do-echo-message</Module>
+                <Options>
+                     <Message>SHUTDOWN!</Message>
+                </Options>
+            </Do>
+        </Action>
+        <Action>
+            <On>
+                <Module>amps-action-on-publish-message</Module>
+                <Options>
+                    <Topic>orders</Topic>
+                    <MessageType>json</MessageType>
+                </Options>
+            </On>
+            <Do>
+                <Module>amps-action-do-echo-message</Module>
+                <Options>
+                     <Message>AAAAAA!</Message>
+                </Options>
+            </Do>
+        </Action>
+    </Actions>
+</AMPSConfig>
