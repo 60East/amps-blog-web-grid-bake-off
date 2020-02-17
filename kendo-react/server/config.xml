@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AMPSConfig>
+    <Name>Javascript QuickStart Demo</Name>
+
+    <MiniDumpDirectory>disabled</MiniDumpDirectory>
+
+    <Admin>
+        <FileName>stats.db</FileName>
+        <InetAddr>localhost:8085</InetAddr>
+        <Interval>10s</Interval>
+        <SQLTransport>json-websocket</SQLTransport>
+    </Admin>
+
+    <MessageTypes>
+        <MessageType>
+            <Name>compositejjjbl</Name>
+            <Module>composite-local</Module>
+            <MessageType>json</MessageType>
+            <MessageType>json</MessageType>
+            <MessageType>json</MessageType>
+            <MessageType>binary</MessageType>
+        </MessageType>
+    </MessageTypes>
+
+    <Protocols>
+        <Protocol>
+            <Name>websocket-portal-regular</Name>
+            <Module>websocket</Module>
+            <AccessControlAllowOrigin>https://foo.com</AccessControlAllowOrigin>
+            <AccessControlAllowOrigin>https://something.bar.com</AccessControlAllowOrigin>
+        </Protocol>
+        <Protocol>
+            <Name>websocket-portal-basic-auth</Name>
+            <Module>websocket</Module>
+            <WWWAuthenticate>Basic realm="Secure Area"</WWWAuthenticate>
+        </Protocol>
+        <Protocol>
+            <Name>websocket-portal</Name>
+            <Module>websocket</Module>
+        </Protocol>
+    </Protocols>
+
+    <Transports>
+        <Transport>
+            <Name>json-websocket</Name>
+            <Type>tcp</Type>
+            <Protocol>websocket-portal-regular</Protocol>
+            <InetAddr>9000</InetAddr>
+        </Transport>
+    </Transports>
+
+    <Logging>
+        <Target>
+            <Protocol>file</Protocol>
+            <FileName>./logs/amps.log</FileName>
+            <RotationThreshold>3GB</RotationThreshold>
+            <Level>trace</Level>
+            <IncludeErrors>00-0000</IncludeErrors>
+        </Target>
+        <Target>
+            <Protocol>stdout</Protocol>
+            <Level>trace</Level>
+            <IncludeErrors>00-0015</IncludeErrors>
+        </Target>
+    </Logging>
+
+    <SOWStatsInterval>1s</SOWStatsInterval>
+    <SOW>
+        <TopicDefinition>
+            <Topic>orders</Topic>
+            <MessageType>json</MessageType>
+            <FileName>./sow/%n.sow</FileName>
+            <Key>/order_id</Key>
+        </TopicDefinition>
+        <TopicDefinition>
+            <Topic>composite</Topic>
+            <MessageType>compositejjjbl</MessageType>
+            <FileName>./sow/%n.sow</FileName>
+            <Key>/0/id</Key>
+        </TopicDefinition>
+        <TopicDefinition>
+            <Topic>bson-topic</Topic>
+            <MessageType>bson</MessageType>
+            <FileName>./sow/%n.sow</FileName>
+            <Key>/job_id</Key>
+        </TopicDefinition>
+        <TopicDefinition>
+            <Topic>json-topic</Topic>
+            <MessageType>json</MessageType>
+            <FileName>./sow/%n.sow</FileName>
+            <Key>/job_id</Key>
+        </TopicDefinition>
+        <TopicDefinition>
+            <Topic>nvfix-topic</Topic>
+            <MessageType>nvfix</MessageType>
+            <FileName>./sow/%n.sow</FileName>
+            <Key>/id</Key>
+        </TopicDefinition>
+
+        <Queue>
+            <Name>test_queue</Name>
+            <MessageType>json</MessageType>
+            <Semantics>at-most-once</Semantics>
+        </Queue>
+    </SOW>
+
+    <TransactionLog>
+        <JournalDirectory>./journals</JournalDirectory>
+        <MinJournalSize>10MB</MinJournalSize>
+        <Topic>
+            <Name>transactional-topic</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+        <Topic>
+            <Name>.*_queue$</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+    </TransactionLog>
+</AMPSConfig>
+
