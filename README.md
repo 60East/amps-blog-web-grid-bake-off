@@ -1,6 +1,9 @@
 # amps-blog-web-grid-bake-off
 
-This is the repo with the artifacts for the original blog article [Grids Without Gridlock: Which is Fastest?](http://www.crankuptheamps.com//blog/posts/2017/10/05/grid-comparison/)
+This is the repo with the artifacts for the following blog articles: 
+
+- [Grids Without Gridlock: Which is Fastest?](https://www.crankuptheamps.com//blog/posts/2017/10/05/grid-comparison/)
+- [Best Web Grids for 2020](https://www.crankuptheamps.com//blog/posts/2020/01/23/grid-comparison-2/)
 
 
 # Overview
@@ -17,12 +20,19 @@ This repository contains sample demo projects that demonstrate how to use
 - [Kendo UI Grid](https://demos.telerik.com/kendo-ui/grid/index)
 - [FancyGrid](https://fancygrid.com/)
 - [w2ui Grid](http://w2ui.com/web/docs/1.5/grid)
+- [Tabulator](http://tabulator.info/)
+- [FXB Grid](https://www.javascript-grid-control.com/)
+- [Wijmo](https://www.grapecity.com/wijmo/demos/Grid/Overview/purejs)
+- [RevoGrid](https://revolist.github.io/revogrid/)
+- [SmartGrid](https://mukuljainx.github.io/smart-grid/)
+- [SyncFusion DataGrid](https://www.syncfusion.com/javascript-ui-controls/js-data-grid)
+
 
 Each grid demo is located in the corresponding directory. Each demo project
 contains a README file with further details and instructions on how to use them.
 
 The `tools` directory contains the graph building script that was used for visualizing
-comparison data, as well as simple publishing Python scripts.
+comparison data, the AMPS Server configuration file, and simple publishing/updating Python scripts.
 
 
 # License

@@ -1,0 +1,8 @@
+{
+  "short_name": "AMPS Revo-grid",
+  "name": "AMPS Revo-Grid Demo",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

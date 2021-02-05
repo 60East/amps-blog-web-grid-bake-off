@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Tabulator 4.9 AMPS Demo</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+        <!-- Dependencies -->
+        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
+        <script src="src/amps.min.js"></script>
+
+        <!-- Styles -->
+        <link href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="src/css/index.css" type="text/css" media="all" />
+
+        <!-- Starting point -->
+        <script src="src/index.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <h1 id="header"> <img src="src/img/logo.png" id="logo" /> AMPS Tabulator Demo</h1>
+
+        <!-- Query Controls -->
+        <div class="frame">
+            <table>
+                <tr>
+                    <td class="right"><label>Topic *: </label></td>
+                    <td>
+                        <select id="message_type">
+                            <option value="json">JSON</option>
+                            <option value="nvfix">NVFIX</option>
+                        </select>
+                        <input type="text" name="topic" id="topic" value="orders" />
+                    </td>
+                    <td class="right"><label>Filter: </label></td>
+                    <td><input type="text" name="filter" id="filter" value="" /></td>
+                </tr>
+                <tr>
+                    <td class="right"><label>TopN: </label></td>
+                    <td><input type="text" name="top_n" id="top_n" value="" /></td>
+                    <td class="right"><label>Order By: </label></td>
+                    <td><input type="text" name="order_by" id="order_by" value="/order_id ASC" /></td>
+                </tr>
+            </table>
+
+            <br />
+
+            <!-- Query and Subscribe Button -->
+            <button onclick="queryData();">Query and Subscribe</button> &nbsp;&nbsp;
+            <img id="loading-image" src="src/img/loading.gif" width="20" height="20" hidden />
+        </div>
+
+        <!-- Errors will be reported here -->
+        <div id="error-label"></div>
+
+        <!-- Grid content goes here -->
+        <div id="container"></div>
+    </body>
+</html>

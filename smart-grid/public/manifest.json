@@ -1,0 +1,8 @@
+{
+  "short_name": "AMPS Smart-grid",
+  "name": "AMPS Smart-Grid Demo",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
