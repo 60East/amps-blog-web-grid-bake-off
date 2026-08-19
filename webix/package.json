@@ -22,13 +22,13 @@
   "devDependencies": {
     "@types/webix": "^4.2.0",
     "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.1",
+    "css-loader": "^7.1.4",
     "extract-text-webpack-plugin": "^2.1.0",
     "ts-loader": "^2.0.3",
     "tslint": "^5.2.0",
     "tslint-loader": "^3.5.3",
     "typescript": "^2.3.2",
     "webpack": "^2.5.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^5.2.6"
   }
 }
