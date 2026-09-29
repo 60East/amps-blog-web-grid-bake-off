@@ -3,3 +3,71 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
+
+/* PrimeNG 2's Omega theme used by the original quickstart is no longer
+   distributed with current PrimeNG. These rules retain its compact, shaded
+   data-grid treatment for the modern p-table markup. */
+amps-table {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.legacy-data-table.p-datatable {
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  color: #222;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.legacy-data-table .p-datatable-table-container {
+  overflow-x: auto;
+}
+
+.legacy-data-table .p-datatable-table {
+  border-collapse: collapse;
+  min-width: 100%;
+}
+
+.legacy-data-table .p-datatable-thead > tr > th {
+  background: linear-gradient(to bottom, #f6f7f9 0%, #e6e9ed 100%);
+  border: 1px solid #d9d9d9;
+  color: #313131;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.55em 0.75em;
+  text-align: left;
+  text-shadow: 0 1px 0 #fff;
+  white-space: nowrap;
+}
+
+.legacy-data-table .p-datatable-thead > tr > th:hover,
+.legacy-data-table .p-datatable-thead > tr > th.p-datatable-column-sorted {
+  background: linear-gradient(to bottom, #e9edf2 0%, #d9dee5 100%);
+}
+
+.legacy-data-table .p-datatable-tbody > tr > td {
+  border: 1px solid #e1e1e1;
+  padding: 0.5em 0.75em;
+}
+
+.legacy-data-table .p-datatable-tbody > tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.legacy-data-table .p-datatable-tbody > tr:hover {
+  background: #eaf3f8;
+}
+
+.legacy-data-table .p-datatable-tbody > tr.legacy-empty-row > td {
+  color: #777;
+  font-style: italic;
+  padding: 1em;
+  text-align: center;
+}
+
+.legacy-data-table .p-sortable-column-icon {
+  color: #777;
+  font-size: 0.8em;
+  margin-left: 0.45em;
+}

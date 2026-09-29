@@ -64,7 +64,7 @@ The server demo config is available in `server` directory.
 1. Start the AMPS Server with the provided configuration file:
 
 ```bash
-<PATH_TO_AMPS_SERVER_BINARY>/ampServer amps_instance/amps-config.xml
+<PATH_TO_AMPS_SERVER_BINARY>/ampServer server/config.xml
 ```
 
 2. When running for the first time, populate the server SOW with the sample data:
@@ -92,4 +92,3 @@ consists of the following parts:
 
 When `npm start` is running, any modifications to the source code will recompile 
 and refresh the web interface.
-

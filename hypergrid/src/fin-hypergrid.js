@@ -17521,7 +17521,7 @@ var DateFormatter = Formatter.extend('DateFormatter', {
          */
         this.invalids = new RegExp(
             '[^' +
-            localizedDate.replace(/-/g, '\\-') +
+            localizedDate.replace(/[-.*+?^${}()|[\]\\]/g, '\\$&') +
             missingDigits +
             ']'
         );

@@ -6,6 +6,7 @@ var helpers = require('./helpers');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    mode: 'production',
     devtool: 'source-map',
 
     entry: "./src/index.js",
@@ -27,18 +28,21 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader"
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.js$|\.jsx$/,
                 loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-0']
+                options: {
+                    presets: ['@babel/preset-react', '@babel/preset-env']
                 }
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                loader: 'file?name=[path]/[name].[ext]'
+                type: 'asset/resource',
+                generator: {
+                    filename: '[path][name][ext]'
+                }
             }
         ]
     },
@@ -46,10 +50,6 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'config/index.html'
-        }),
-
-        new webpack.optimize.DedupePlugin(),
-
-        new webpack.optimize.UglifyJsPlugin()
+        })
     ]
 };

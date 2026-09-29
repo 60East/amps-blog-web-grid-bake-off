@@ -4,9 +4,9 @@
   "description": "AMPS Webix DataTable demo",
   "main": "app.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "start": "webpack-dev-server",
-    "populate-sow": "node ./amps_instance/helper.js"
+    "populate-sow": "node ./server/helper.js"
   },
   "keywords": [
     "AMPS",
@@ -16,19 +16,16 @@
   "author": "60 East Technologies Inc. <npmjs@crankuptheamps.com> (http://crankuptheamps.com)",
   "license": "MIT",
   "dependencies": {
-    "amps": "^5.2.2-3.682354.e5814ab",
+    "amps": "^5.3.4-0.378635.60b2fcc",
     "webix": "^4.3.0"
   },
   "devDependencies": {
     "@types/webix": "^4.2.0",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^7.1.4",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "ts-loader": "^2.0.3",
-    "tslint": "^5.2.0",
-    "tslint-loader": "^3.5.3",
-    "typescript": "^2.3.2",
-    "webpack": "^2.5.1",
-    "webpack-dev-server": "^5.2.6"
+    "copy-webpack-plugin": "^14.0.0",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
+    "webpack": "^5.111.1",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-server": "^6.0.0"
   }
 }

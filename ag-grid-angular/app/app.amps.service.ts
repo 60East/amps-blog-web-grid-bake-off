@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { Message } from 'amps';
-import * as workerPath from 'file-loader?name=[name].js!./amps.worker';
 
 
 @Injectable()
 export class AmpsService {
     private worker: Worker = null;
+
+    constructor(@Inject(NgZone) private zone: NgZone) {}
 
     /**
      * This method loads data from AMPS using a dedicated worker.
@@ -28,25 +29,31 @@ export class AmpsService {
         }
         
         // create a new Worker
-        this.worker = new Worker(workerPath);
+        this.worker = new Worker(new URL('./amps.worker.ts', import.meta.url));
 
         // assigning an event listener to get results from worker
         this.worker.addEventListener('message', (e: MessageEvent) => {
-            if (e.data.error) {
-                onError(e.data.error);
-            }
-            else if (e.data.sow) {
-                onSow(e.data.sow);
-            }
-            else if (e.data.p) {
-                onNew(e.data.p);
-            }
-            else if (e.data.u) {
-                onUpdate(e.data.u);
-            }
-            else if (e.data.oof) {
-                onDelete(e.data.oof);
-            }
+            this.zone.run(() => {
+                if (e.data.error) {
+                    onError(e.data.error);
+                }
+                else if (e.data.sow) {
+                    onSow(e.data.sow);
+                }
+                else if (e.data.p) {
+                    onNew(e.data.p);
+                }
+                else if (e.data.u) {
+                    onUpdate(e.data.u);
+                }
+                else if (e.data.oof) {
+                    onDelete(e.data.oof);
+                }
+            });
+        });
+
+        this.worker.addEventListener('error', (e: ErrorEvent) => {
+            this.zone.run(() => onError(new Error(e.message || 'The AMPS worker failed to start.')));
         });
 
         // start the worker

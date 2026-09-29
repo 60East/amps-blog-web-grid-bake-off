@@ -62,6 +62,7 @@ self.addEventListener('message', function(event) {
 
                     if (rowId) {
                         var index = indexByRowId(rowId);
+                        message.data.rowId = rowId;
                         delete sowKeyMap[message.header.sowKey()];
                         data.splice(index, 1);
                         self.postMessage({oof: message.data, rowIndex: index});

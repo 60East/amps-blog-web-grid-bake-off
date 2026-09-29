@@ -7,11 +7,14 @@ import '@angular/common';
 // RxJS
 import 'rxjs';
 
-// ag-grid
-import 'ag-grid/dist/styles/ag-grid.css';
-import 'ag-grid/dist/styles/theme-fresh.css';
+// Application styles are bundled by webpack; webpack-dev-server does not serve
+// the source assets directory as a static root.
+import '../assets/index.css';
 
-import 'ag-grid-angular/main'
+// ag-grid
+import 'ag-grid-community/styles/ag-theme-quartz.css';
+
+import 'ag-grid-angular';
 
 // for ag-grid-enterprise users only 
 //import 'ag-grid-enterprise/main';

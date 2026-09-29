@@ -39,6 +39,21 @@ if (typeof Slick === "undefined") {
   // shared across all grids on the page
   var scrollbarDimensions;
   var maxSupportedCssHeight;  // browser's breaking point
+  var uidCounter = 0;
+
+  function getUid() {
+    var crypto = window.crypto || window.msCrypto;
+
+    if (crypto && crypto.getRandomValues) {
+      var randomValues = new Uint32Array(1);
+      crypto.getRandomValues(randomValues);
+      return randomValues[0];
+    }
+
+    // Grid IDs need only be unique within this page; retain compatibility with
+    // browsers that do not expose the Web Crypto API without weak randomness.
+    return ++uidCounter;
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
   // SlickGrid class implementation (available as Slick.Grid)
@@ -127,7 +142,7 @@ if (typeof Slick === "undefined") {
     // private
     var initialized = false;
     var $container;
-    var uid = "slickgrid_" + Math.round(1000000 * Math.random());
+    var uid = "slickgrid_" + getUid();
     var self = this;
     var $focusSink, $focusSink2;
     var $headerScroller;

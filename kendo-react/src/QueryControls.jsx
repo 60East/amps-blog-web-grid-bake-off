@@ -35,7 +35,9 @@ export default class QueryControls extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    handleQueryRequest() {
+    handleQueryRequest(event) {
+        event.preventDefault();
+
         // show loading image
         document.getElementById('loading-image').style.display = 'inline-block';
         this.setState({errorLabel: ''});
@@ -106,7 +108,11 @@ export default class QueryControls extends Component {
 
                     <br />
 
-                    <button onClick={this.handleQueryRequest.bind(this)}>Query and Subscribe</button>
+                    <input
+                        type="button"
+                        value="Query and Subscribe"
+                        onClick={this.handleQueryRequest.bind(this)}
+                    />
                     <img id="loading-image" src="/assets/img/loading.gif" width="20" height="20" hidden />
                 </div>
 
@@ -121,4 +127,3 @@ QueryControls.propTypes = {
     onInit: PropTypes.func.isRequired,
     onQuery: PropTypes.func.isRequired
 }
-

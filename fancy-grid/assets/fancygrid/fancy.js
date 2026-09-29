@@ -25,6 +25,20 @@ var Fancy = {
 
 window.Fancy = Fancy;
 
+var isSafeNamespace = function(value){
+  var parts = value.split('.'),
+    i = 0,
+    iL = parts.length;
+
+  for(;i<iL;i++){
+    if(parts[i] === '__proto__' || parts[i] === 'constructor' || parts[i] === 'prototype'){
+      return false;
+    }
+  }
+
+  return true;
+};
+
 /**
  * Copies all the properties of `from` to the specified `to`.
  * 
@@ -67,7 +81,13 @@ Fancy.namespace = function(){
     iL = arguments.length;
   
   for(;i<iL;i++){
-    var value = arguments[i],
+    var value = arguments[i];
+
+    if(!isSafeNamespace(value)){
+      continue;
+    }
+
+    var
       parts = value.split("."),
       j = 1,
       jL = parts.length;
@@ -319,6 +339,10 @@ Fancy.mixin = function(proto, classes){
 };
 
 Fancy.Mixin = function(name, config){
+  if(!isSafeNamespace(name)){
+    return;
+  }
+
   var parts = name.split("."),
     i = 1,
     iL = parts.length - 1;
@@ -718,7 +742,7 @@ var userAgent = navigator.userAgent.toLowerCase(),
 
     if (navigator.appName == 'Microsoft Internet Explorer') {
       ua = navigator.userAgent;
-      re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+      re = new RegExp("MSIE ([0-9]{1,}[\\.0-9]{0,})");
 
       if (re.exec(ua) != null) {
         rv = parseFloat(RegExp.$1);
@@ -726,7 +750,7 @@ var userAgent = navigator.userAgent.toLowerCase(),
     }
     else if (navigator.appName == 'Netscape') {
       ua = navigator.userAgent;
-      re = new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
+      re = new RegExp("Trident/.*rv:([0-9]{1,}[\\.0-9]{0,})");
 
       if (re.exec(ua) != null) {
         rv = parseFloat(RegExp.$1);
@@ -1840,6 +1864,10 @@ ClassManager.prototype = {
    * @param {String} key
    */
   add: function(key, value){
+    if(!isSafeNamespace(key)){
+      return;
+    }
+
     var parts = key.split("."),
       i = 1,
       iL = parts.length - 1;
@@ -1876,6 +1904,10 @@ ClassManager.prototype = {
   waitMixin: function(whatWait, whoWait){
     var me = this;
 
+    if(!isSafeNamespace(whatWait)){
+      return;
+    }
+
     me.waitMixins[whatWait] = me.waitMixins[whatWait] || {
         waiters: []
       };
@@ -1887,6 +1919,10 @@ ClassManager.prototype = {
    * @return {Object}
    */
   getMixin: function(name){
+    if(!isSafeNamespace(name)){
+      return false;
+    }
+
     var parts = name.split("."),
       j = 1,
       jL = parts.length;

@@ -3,7 +3,6 @@ import QueryControls from './QueryControls';
 import {Grid, GridColumn} from '@progress/kendo-react-grid';
 import { populateSOW, randomDataUpdates } from './populate_sow';
 import { registerForIntl } from '@progress/kendo-react-intl';
-var AMPSWebWoker = require('worker-loader!./query_worker.js');
 
 
 export default class AMPSGrid extends Component {
@@ -39,7 +38,7 @@ export default class AMPSGrid extends Component {
         }
 
         // A nice way to load large queries - in a WebWorker process
-        this.worker = new AMPSWebWoker();
+        this.worker = new Worker(new URL('./query_worker.js', import.meta.url));
 
         // start the loading
         this.worker.postMessage(query);
@@ -56,11 +55,13 @@ export default class AMPSGrid extends Component {
                 });
             }
             else if (event.data.sow) {
+                const firstRow = event.data.sow[0];
+
                 this.setState({
-                    // generate column data from the first message
-                    columnDefs: Object.keys(event.data.sow[0]).map(function(key) {
+                    // An empty SOW is a valid initial query result.
+                    columnDefs: firstRow ? Object.keys(firstRow).map(function(key) {
                         return {title: key.toTitleCase(), field: key, key, width: 200};
-                    }),
+                    }) : [],
                     rowData: event.data.sow
                 });
             }
@@ -160,5 +161,3 @@ export default class AMPSGrid extends Component {
         )
     }
 };
-
-

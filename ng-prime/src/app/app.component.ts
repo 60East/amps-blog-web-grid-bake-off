@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+    standalone: false,
     selector: 'my-app',
     template: `
         <h1>{{ title }}</h1>
@@ -10,4 +11,3 @@ import { Component } from '@angular/core';
 export class AppComponent {
     title: string = 'AMPS SOW Table Demo';
 }
-

@@ -1,7 +1,6 @@
-"use strict";
-var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
-var core_1 = require("@angular/core");
-var app_module_1 = require("./app/app.module");
-core_1.enableProdMode();
-platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
+import '@angular/compiler';
+import 'zone.js';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+platformBrowserDynamic().bootstrapModule(AppModule);
 //# sourceMappingURL=main.js.map

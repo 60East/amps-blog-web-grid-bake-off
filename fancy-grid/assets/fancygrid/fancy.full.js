@@ -25,6 +25,20 @@ var Fancy = {
 
 window.Fancy = Fancy;
 
+var isSafeNamespace = function(value){
+  var parts = value.split('.'),
+    i = 0,
+    iL = parts.length;
+
+  for(;i<iL;i++){
+    if(parts[i] === '__proto__' || parts[i] === 'constructor' || parts[i] === 'prototype'){
+      return false;
+    }
+  }
+
+  return true;
+};
+
 /**
  * Copies all the properties of `from` to the specified `to`.
  * 
@@ -67,7 +81,13 @@ Fancy.namespace = function(){
     iL = arguments.length;
   
   for(;i<iL;i++){
-    var value = arguments[i],
+    var value = arguments[i];
+
+    if(!isSafeNamespace(value)){
+      continue;
+    }
+
+    var
       parts = value.split("."),
       j = 1,
       jL = parts.length;
@@ -319,6 +339,10 @@ Fancy.mixin = function(proto, classes){
 };
 
 Fancy.Mixin = function(name, config){
+  if(!isSafeNamespace(name)){
+    return;
+  }
+
   var parts = name.split("."),
     i = 1,
     iL = parts.length - 1;
@@ -718,7 +742,7 @@ var userAgent = navigator.userAgent.toLowerCase(),
 
     if (navigator.appName == 'Microsoft Internet Explorer') {
       ua = navigator.userAgent;
-      re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+      re = new RegExp("MSIE ([0-9]{1,}[\\.0-9]{0,})");
 
       if (re.exec(ua) != null) {
         rv = parseFloat(RegExp.$1);
@@ -726,7 +750,7 @@ var userAgent = navigator.userAgent.toLowerCase(),
     }
     else if (navigator.appName == 'Netscape') {
       ua = navigator.userAgent;
-      re = new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
+      re = new RegExp("Trident/.*rv:([0-9]{1,}[\\.0-9]{0,})");
 
       if (re.exec(ua) != null) {
         rv = parseFloat(RegExp.$1);
@@ -2718,6 +2742,10 @@ ClassManager.prototype = {
    * @param {String} key
    */
   add: function(key, value){
+    if(!isSafeNamespace(key)){
+      return;
+    }
+
     var parts = key.split("."),
       i = 1,
       iL = parts.length - 1;
@@ -2754,6 +2782,10 @@ ClassManager.prototype = {
   waitMixin: function(whatWait, whoWait){
     var me = this;
 
+    if(!isSafeNamespace(whatWait)){
+      return;
+    }
+
     me.waitMixins[whatWait] = me.waitMixins[whatWait] || {
         waiters: []
       };
@@ -2765,6 +2797,10 @@ ClassManager.prototype = {
    * @return {Object}
    */
   getMixin: function(name){
+    if(!isSafeNamespace(name)){
+      return false;
+    }
+
     var parts = name.split("."),
       j = 1,
       jL = parts.length;
@@ -8649,7 +8685,6 @@ if( Fancy.nojQuery ){
       },
       fragmentRE = /^\s*<(\w+|!)[^>]*>/,
       singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
-      tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
       rootNodeRE = /^(?:body|html)$/i,
       capitalRE = /([A-Z])/g,
 
@@ -8812,7 +8847,6 @@ if( Fancy.nojQuery ){
       if (singleTagRE.test(html)) dom = $(document.createElement(RegExp.$1))
 
       if (!dom) {
-        if (html.replace) html = html.replace(tagExpanderRE, "<$1></$2>")
         if (name === undefined) name = fragmentRE.test(html) && RegExp.$1
         if (!(name in containers)) name = '*'
 
@@ -10128,7 +10162,6 @@ if( Fancy.nojQuery ) {
       document = window.document,
       key,
       name,
-      rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
       scriptTypeRE = /^(?:text|application)\/javascript/i,
       xmlTypeRE = /^(?:text|application)\/xml/i,
       jsonType = 'application/json',
@@ -10137,6 +10170,19 @@ if( Fancy.nojQuery ) {
       originAnchor = document.createElement('a');
 
     originAnchor.href = window.location.href;
+
+    function removeScripts(html) {
+      var container = document.createElement('div'),
+        scripts;
+
+      container.innerHTML = html;
+      scripts = container.getElementsByTagName('script');
+      while (scripts.length) {
+        scripts[0].parentNode.removeChild(scripts[0]);
+      }
+
+      return container.innerHTML;
+    }
 
     // trigger a custom event and return false if it was cancelled
     function triggerAndReturn(context, eventName, data) {
@@ -10463,7 +10509,7 @@ if( Fancy.nojQuery ) {
       if (parts.length > 1) options.url = parts[0], selector = parts[1]
       options.success = function (response) {
         self.html(selector ?
-          $('<div>').html(response.replace(rscript, "")).find(selector)
+          $('<div>').html(removeScripts(response)).find(selector)
           : response)
         callback && callback.apply(self, arguments)
       }

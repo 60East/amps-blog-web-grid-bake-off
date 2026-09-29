@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import loadingImage from '../assets/img/loading.gif';
 
 
 @Component({
     selector: 'query-controls',
+    standalone: false,
     template: `
         <div class="frame">
             <table>
@@ -48,13 +50,15 @@ import { Component, Input } from '@angular/core';
             <br />
 
             <button (click)="onQueryRequest()">Query and Subscribe</button>
-            <img id="loading-image" src="/assets/img/loading.gif" width="20" height="20" [hidden]="!loading" />
+            <img #loadingImageElement id="loading-image" [src]="loadingImage" width="20" height="20" [hidden]="!loading" />
         </div>
 
         <div id="error-label">{{ errorLabel }}</div> 
     `
 })
 export class QueryControls {
+    loadingImage = loadingImage;
+    @ViewChild('loadingImageElement') loadingImageElement: ElementRef<HTMLImageElement>;
     private messageTypes: any[] = [
         {value: 'json', name: 'JSON'},
         {value: 'nvfix', name: 'NVFIX'}
@@ -90,6 +94,11 @@ export class QueryControls {
 
     onLoadFinish(err?: Error) {
         this.loading = false;
+        // Worker callbacks can run outside this legacy app's Angular change
+        // detection context. Ensure the loading indicator is hidden immediately.
+        if (this.loadingImageElement) {
+            this.loadingImageElement.nativeElement.hidden = true;
+        }
 
         if (err) {
             this.errorLabel = err.message;
@@ -97,4 +106,3 @@ export class QueryControls {
         }
     }
 }
-

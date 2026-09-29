@@ -4,10 +4,11 @@ const helpers = require('./helpers');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     entry: "./src/index.js",
     output: {
         path: helpers.root('dist'),
-        publicPath: 'http://localhost:8080/',
+        publicPath: '/',
         filename: '[name].js'
     },
 
@@ -15,18 +16,21 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader"
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.js$|\.jsx$/,
                 loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-0']
+                options: {
+                    presets: ['@babel/preset-react', '@babel/preset-env']
                 }
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                loader: 'file?name=[path]/[name].[ext]'
+                type: 'asset/resource',
+                generator: {
+                    filename: '[path][name][ext]'
+                }
             }
         ]
     },
@@ -46,8 +50,13 @@ module.exports = {
     ],
 
     devServer: {
+        host: '127.0.0.1',
+        port: 8080,
         historyApiFallback: true,
-        contentBase: './',
-        hot: true
+        static: {
+            directory: helpers.root('.')
+        },
+        hot: 'only',
+        liveReload: false
     }
 };

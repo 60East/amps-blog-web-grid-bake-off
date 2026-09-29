@@ -1,12 +1,31 @@
-import { Component } from '@angular/core';
-import { GridOptions } from 'ag-grid/main';
+import { Component, Inject } from '@angular/core';
+import {
+    ClientSideRowModelApiModule,
+    ClientSideRowModelModule,
+    ColumnAutoSizeModule,
+    GridApi,
+    GridOptions,
+    ModuleRegistry,
+    RowApiModule,
+    RowSelectionModule,
+    ScrollApiModule
+} from 'ag-grid-community';
 import { AmpsService } from './app.amps.service';
 import { QueryControls } from './app.query.controls.component';
 import { populateSOW, randomDataUpdates } from './populate_sow';
 
+ModuleRegistry.registerModules([
+    ClientSideRowModelModule,
+    ClientSideRowModelApiModule,
+    ColumnAutoSizeModule,
+    RowApiModule,
+    RowSelectionModule,
+    ScrollApiModule
+]);
 
 @Component({
     selector: 'amps-grid',
+    standalone: false,
     template: `
         <button (click)="handlePopulateSOW()">Re-Populate SOW</button>
 
@@ -21,7 +40,7 @@ import { populateSOW, randomDataUpdates } from './populate_sow';
             [onQuery]="queryData.bind(this)">
         </query-controls>
 
-        <ag-grid-angular id="ag-grid" class="ag-fresh"
+        <ag-grid-angular id="ag-grid" class="ag-theme-quartz"
             [gridOptions]="gridOptions"
             [columnDefs]="columnDefs"
             [rowData]="rowData">
@@ -30,18 +49,30 @@ import { populateSOW, randomDataUpdates } from './populate_sow';
 })
 export class AMPSGrid {
     private gridOptions: GridOptions;
+    private gridApi: GridApi;
     private queryControls: QueryControls;
     private randomizerEnabled: boolean = false;
     rowData: any[] = [];
     columnDefs: any[] = [];
 
-    constructor(private ampsService: AmpsService) {
+    constructor(@Inject(AmpsService) private ampsService: AmpsService) {
         // we pass an empty gridOptions in, so we can grab the api out
         this.gridOptions = <GridOptions>{
-            onGridReady: () => {
-                this.gridOptions.api.sizeColumnsToFit();
+            onGridReady: params => {
+                this.gridApi = params.api;
+                this.gridApi.sizeColumnsToFit();
             },
-            getRowNodeId: item => item.order_id
+            getRowId: item => String(item.data.order_id),
+            autoSizeStrategy: {
+                type: 'fitGridWidth',
+                continuous: true
+            },
+            suppressHorizontalScroll: true,
+            rowSelection: {
+                mode: 'singleRow',
+                checkboxes: false,
+                enableClickSelection: false
+            }
         };
     }
 
@@ -60,43 +91,59 @@ export class AMPSGrid {
             messages => {
                 this.queryControls.onLoadFinish();
 
+                if (messages.length === 0) {
+                    this.gridApi.setGridOption('columnDefs', []);
+                    this.gridApi.setGridOption('rowData', []);
+                    return;
+                }
+
                 // bind fresh data and column names
                 console.time('render table');
-                this.gridOptions.api.setColumnDefs(Object.keys(messages[0]).map(function(key: string) {
+                this.gridApi.setGridOption('columnDefs', Object.keys(messages[0]).map(function(key: string) {
                     return {
                         // headerName: key.toTitleCase(),
                         headerName: key,
                         field: key
                     };
                 }));
-                this.gridOptions.api.setRowData(messages);
+                this.gridApi.setGridOption('rowData', messages);
+                requestAnimationFrame(() => this.gridApi.sizeColumnsToFit());
                 console.timeEnd('render table');
             },
 
             // New message received
             message => {
                 console.time('add row');
-                this.gridOptions.api.updateRowData({add: [message]});
-                rowNode = this.gridOptions.api.getRowNode(message.order_id);
-                // rowNode.setSelected(true);
-                this.gridOptions.api.ensureIndexVisible(rowNode.rowIndex);
+                this.gridApi.applyTransaction({add: [message]});
+                rowNode = this.gridApi.getRowNode(String(message.order_id));
+                if (rowNode) {
+                    // rowNode.setSelected(true);
+                    this.gridApi.ensureNodeVisible(rowNode, 'middle');
+                }
                 console.timeEnd('add row');
             },
 
             // Update message received
             message => {
-                rowNode = this.gridOptions.api.getRowNode(message.order_id);
-                rowNode.setData(message);
-                rowNode.setSelected(true);
-                this.gridOptions.api.ensureIndexVisible(rowNode.rowIndex);
+                rowNode = this.gridApi.getRowNode(String(message.order_id));
+                if (rowNode) {
+                    rowNode.setData(message);
+                    rowNode.setSelected(true);
+                    this.gridApi.ensureNodeVisible(rowNode, 'middle');
+                }
+                else {
+                    this.gridApi.applyTransaction({add: [message]});
+                }
             },
 
             // OOF (delete) message received
             message => {
-                rowNode = this.gridOptions.api.getRowNode(message.order_id);
-                this.gridOptions.api.ensureIndexVisible(rowNode.rowIndex);
-                rowNode.setSelected(true);
-                setTimeout(() => { this.gridOptions.api.removeItems([rowNode]); }, 500);
+                rowNode = this.gridApi.getRowNode(String(message.order_id));
+                if (rowNode) {
+                    this.gridApi.ensureNodeVisible(rowNode, 'middle');
+                    rowNode.setSelected(true);
+                    setTimeout(() => { this.gridApi.applyTransaction({remove: [rowNode.data]}); }, 500);
+                }
             },
 
             // Error occurred
@@ -115,4 +162,3 @@ export class AMPSGrid {
         randomDataUpdates(enabled);
     }
 }
-

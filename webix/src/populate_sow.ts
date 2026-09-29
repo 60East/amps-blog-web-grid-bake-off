@@ -28,7 +28,7 @@ export function populateSOW(count: number) {
 
             return client.flush();
         })
-        .then(function() { return new Promise(function(resolve: () => void) { setTimeout(resolve, 4000); }); })
+        .then(function() { return new Promise<void>(function(resolve) { setTimeout(resolve, 4000); }); })
         .then(function() {
             client.deltaPublish('orders', {order_id: 1, name: 'TEST', price_usd: 1000, quantity: 100});
             return client.flush();

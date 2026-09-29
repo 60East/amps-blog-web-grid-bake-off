@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import { AMPSMessage } from './amps-message';
 import { AmpsService } from './app.amps.service';
 
@@ -8,42 +8,58 @@ import { AmpsService } from './app.amps.service';
  */
 
 @Component({
-    moduleId: module.id,
+    standalone: false,
     selector: 'amps-table',
     template: `
-    <p-dataTable 
-        [value]="displayData" 
-        selectionMode="single" 
-        groupField="order_id" 
-        resizableColumns="true" 
-        [sortableRowGroup]="false" 
+    <p-table
+        class="legacy-data-table"
+        [value]="displayData"
+        dataKey="order_id"
+        [rowTrackBy]="getMessageId"
+        [scrollable]="true"
+        scrollHeight="800px"
+        [virtualScroll]="true"
+        [virtualScrollItemSize]="38"
         sortField="order_id"
-        [responsive]="true">
-
-        <p-column 
-            *ngFor="let col of columnNames"  
-            [field]="col.field" 
-            [header]="col.header" 
-            [style]="col.style"
-            [sortable]="true">
-        </p-column>
-
-    </p-dataTable>
+        [sortOrder]="1">
+        <ng-template #header>
+            <tr>
+                <th
+                    *ngFor="let col of columnNames"
+                    [pSortableColumn]="col.field"
+                    [style]="col.style">
+                    {{ col.header }}
+                    <p-sort-icon [field]="col.field"></p-sort-icon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-message>
+            <tr>
+                <td *ngFor="let col of columnNames">{{ message[col.field] }}</td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr class="legacy-empty-row">
+                <td [attr.colspan]="columnNames.length">No records found</td>
+            </tr>
+        </ng-template>
+    </p-table>
     `
 })
 export class TableViewComponent implements OnInit {
+    private readonly ampsService = inject(AmpsService);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
     columnNames: any[];
 
     // data
-    displayData: AMPSMessage[];
+    displayData: AMPSMessage[] = [];
     // filter: string = '/id < 1000';
     filter: string = '';
 
     getMessageId(index: number, message: AMPSMessage) {
         return message.ts;
     }
-
-    constructor(private ampsService: AmpsService) {}
 
     ngOnInit() {
         this.columnNames = [
@@ -57,7 +73,10 @@ export class TableViewComponent implements OnInit {
         // get data from AMPS and display it
         this.ampsService
             .getTableData(this.filter)
-            .then(messageData => this.displayData = messageData)
+            .then(messageData => {
+                this.displayData = messageData;
+                this.changeDetectorRef.detectChanges();
+            })
             .catch((err) => { alert('Error occurred'); });
     }
 }

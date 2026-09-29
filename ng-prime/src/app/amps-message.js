@@ -1,2 +1,2 @@
-"use strict";
+export {};
 //# sourceMappingURL=amps-message.js.map

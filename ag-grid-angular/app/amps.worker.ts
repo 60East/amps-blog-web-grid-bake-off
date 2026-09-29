@@ -1,10 +1,8 @@
 
-// This the way to import a non-TS script.
-declare function importScripts(...urls: string[]): void;
-importScripts('app/amps.js');
-
-
-export declare var amps: any;
+// Bundle the legacy AMPS browser client into the worker. The old importScripts
+// path pointed at a source file that webpack-dev-server does not publish.
+import * as amps from './amps.js';
+const ampsClient: any = amps;
 let data: any[];
 
 
@@ -15,7 +13,7 @@ onmessage = (event: MessageEvent) => {
     const params = event.data;
 
     // Create the client object
-    const client = new amps.Client('sow-loader-' + new Date() + '-' + Math.random() * 99999999);
+    const client = new ampsClient.Client('sow-loader-' + new Date() + '-' + Math.random() * 99999999);
     client.errorHandler((err: Error) => (<any>postMessage)({error: err}));
 
     // let's go!
