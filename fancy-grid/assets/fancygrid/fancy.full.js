@@ -2742,13 +2742,18 @@ ClassManager.prototype = {
    * @param {String} key
    */
   add: function(key, value){
-    if(!isSafeNamespace(key)){
-      return;
+    var parts = key.split("."),
+      i = 0,
+      iL = parts.length;
+
+    for(;i<iL;i++){
+      if(parts[i] === '__proto__' || parts[i] === 'constructor' || parts[i] === 'prototype'){
+        return;
+      }
     }
 
-    var parts = key.split("."),
-      i = 1,
-      iL = parts.length - 1;
+    i = 1;
+    iL = parts.length - 1;
     
     Fancy.ns(key);
     

@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server",
+    "start": "mkdir -p dist && webpack --mode development --watch & vite dist --host 0.0.0.0 --port 8000",
     "populate-sow": "node ./server/helper.js"
   },
   "keywords": [
@@ -25,7 +25,7 @@
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",
     "webpack": "^5.111.1",
-    "webpack-cli": "^7.2.3",
-    "webpack-dev-server": "^6.0.0"
+    "vite": "^8.3.2",
+    "webpack-cli": "^7.2.3"
   }
 }
