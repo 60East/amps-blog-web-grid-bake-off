@@ -1876,12 +1876,18 @@ ClassManager.prototype = {
 
     i = 1;
     iL = parts.length - 1;
-    
-    Fancy.ns(key);
-    
+
+    if(!Object.prototype.hasOwnProperty.call(Fancy.global, parts[0])){
+      Fancy.global[parts[0]] = {};
+    }
+
     var ref = Fancy.global[parts[0]];
     
     for(;i<iL;i++){
+      if(!Object.prototype.hasOwnProperty.call(ref, parts[i])){
+        ref[parts[i]] = {};
+      }
+
       ref = ref[parts[i]];
     }
     
