@@ -1874,28 +1874,26 @@ ClassManager.prototype = {
       }
     }
 
-    i = 1;
-    iL = parts.length - 1;
+    var ref = Fancy.global;
 
-    if(!Object.prototype.hasOwnProperty.call(Fancy.global, parts[0])){
-      Fancy.global[parts[0]] = {};
-    }
+    for(i = 0;i<iL;i++){
+      var part = parts[i];
 
-    var ref = Fancy.global[parts[0]];
-    
-    for(;i<iL;i++){
-      if(!Object.prototype.hasOwnProperty.call(ref, parts[i])){
-        ref[parts[i]] = {};
+      // Guard the exact property used below so static analysis can follow it.
+      if(part === '__proto__' || part === 'constructor' || part === 'prototype'){
+        return;
       }
 
-      ref = ref[parts[i]];
-    }
-    
-    if(parts.length > 1){
-      ref[parts[parts.length - 1]] = value;
-    }
-    else{
-      Fancy.global[parts[0]] = value;
+      if(i === iL - 1){
+        ref[part] = value;
+      }
+      else{
+        if(!Object.prototype.hasOwnProperty.call(ref, part)){
+          ref[part] = {};
+        }
+
+        ref = ref[part];
+      }
     }
     
     this.items.add(key, value);
